@@ -9,6 +9,7 @@ namespace jsConnectdotNet.Controllers
     {
         public ActionResult Index()
         {
+            string responsePayload = string.Empty;
             try
             {
                 // 1. Get your client ID and secret here. These must match those in your jsConnect settings.
@@ -37,13 +38,11 @@ namespace jsConnectdotNet.Controllers
                 bool secure = false; // this should be true unless you are testing
                 string hash = "sha256"; // values supported are md5, sha1, sha256
                 // Vanilla.jsConnect.Debug = true; // turn on debug to help troubleshoot some issues.
-                string js = Vanilla.jsConnect.GetJsConnectString(user, Request.QueryString, clientID, secret, secure, hash);
-
-                ViewData["Response"] = js;
+                responsePayload = Vanilla.jsConnect.GetJsConnectString(user, Request.QueryString, clientID, secret, secure, hash);
             }
             catch (System.Threading.ThreadAbortException)
             {
-                ViewData["Response"] = "{\"error\": \"Unknown error.\"}";
+                responsePayload = "{\"error\": \"Unknown error.\"}";
             }
             catch (Exception ex)
             {
@@ -51,11 +50,10 @@ namespace jsConnectdotNet.Controllers
                 exCollection["error"] = "exception";
                 exCollection["message"] = ex.Message;
 
-                string exString = Vanilla.jsConnect.JsonEncode(exCollection);
-                ViewData["Response"] = exString;
+                responsePayload = Vanilla.jsConnect.JsonEncode(exCollection);
             }
 
-            return View("~/Demo/Views/Sso/Index.cshtml");
+            return Content(responsePayload + ";", "application/javascript");
         }
     }
 }

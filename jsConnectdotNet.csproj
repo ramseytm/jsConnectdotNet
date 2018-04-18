@@ -63,7 +63,6 @@
   <ItemGroup>
     <Folder Include="Demo\" />
     <Folder Include="Demo\Controllers\" />
-    <Folder Include="Demo\Views\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -76,8 +75,6 @@
     <Content Include="Web.config" />
     <Content Include="packages.config" />
     <Content Include="Global.asax" />
-    <Content Include="Demo\Views\SSO\Index.cshtml" />
-    <Content Include="Demo\Views\Web.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>
